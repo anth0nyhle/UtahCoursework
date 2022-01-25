@@ -98,32 +98,47 @@ P14_x = P4_x - P1_x;
 P13_x = P3_x - P1_x;
 P24_x = P2_x - P4_x;
 
-% define reference coordinate matrix of El
-X_0 = [P12_0;
+% define reference vectors of El, 6x3 matrix
+dX = [P12_0;
      P23_0;
      P34_0;
      P14_0;
      P13_0;
      P24_0];
 
-% define deformed coordinate matrix of El
-x = [P12_x;
+% define deformed vectors of El, 6x3 matrix
+dx = [P12_x;
      P23_x;
      P34_x;
      P14_x;
      P13_x;
      P24_x];
 
+% calculate the reference lengths of dX
+dS = vecnorm(dX, 2, 2); % 6x1 vector
+
+% calculate the deformed lengths of dX
+ds = vecnorm(dx, 2, 2); % 6x1 vector
+
+% calculate b, 6x1 vector
+b = ds.^2 - dS.^2;
+
+% calculate A, 6x3 matrix
+A = 2 .* [dX(:, 1).^2 dX(:, 2).^2 2.*dX(:, 1).*dX(:, 2)];
+
+% solve the system of equations to find the Green-Lagrange strain elements
+% of El_x: E_11, E_22, and E_12
+E = A\b; % 3x1 vector
+
 % calcuate the displacement, u, between points of 
 % X (reference) and x (deformed) 
-u = x - X_0;
+% u = dx - dX;
 
 % calculate the deformation gradient
-F = 1 + u;
+% F = 1 + u;
 
 % calculate the Green-Lagrange strain tensor
-E = (1/2) * ((transpose(F) * F) - 1);
-
+% E = (1/2) * ((transpose(F) * F) - 1);
 
 %% Problem 5
 
