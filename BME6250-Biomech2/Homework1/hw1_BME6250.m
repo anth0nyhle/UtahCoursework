@@ -173,13 +173,14 @@ for i = 1:length(T_11)
     S_11(i, 1) = S(1, 1);
 end
 
-% plot time vs. Cauchy stress, 1st P-K stress, and 2nd P-K stress
+% plot applied axial stretch ratio vs. 
+% Cauchy stress, 1st P-K stress, and 2nd P-K stress
 figure();
 hold on;
-plot(data.time, T_11, '-o', 'LineWidth', 1.2);
-plot(data.time, P_11, '-d', 'LineWidth', 1.2);
-plot(data.time, S_11, '-*', 'LineWidth', 1.2);
-xlabel('Time (s)');
+plot(lambda1, T_11, '-o', 'LineWidth', 1.2);
+plot(lambda1, P_11, '-d', 'LineWidth', 1.2);
+plot(lambda1, S_11, '-*', 'LineWidth', 1.2);
+xlabel('\lambda_{1}');
 ylabel('Stress (psi)');
 legend('Cauchy Stress', '1st P-K Stress', '2nd P-K Stress', 'Location', 'northwest');
 hold off;
