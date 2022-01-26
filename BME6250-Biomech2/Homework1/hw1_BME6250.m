@@ -125,10 +125,36 @@ A = 2 .* [dX(:, 1).^2 dX(:, 2).^2 2.*dX(:, 1).*dX(:, 2)];
 
 % solve the system of equations to find the Green-Lagrange strain elements
 % of El_x, E_11, E_22, and E_12, as the least-squares solution
-E = A\b; % 3x1 vector
+E = A \ b; % 3x1 vector
 
 %% Problem 5
 close all;
 clear;
 
+% import data exported from FEBio
+data = readtable('.\data\hw1prb5_data.xlsx'); % read as table data type
+
+% determine the stretch ratio from data
+lambda1 = 1 + data.xInfStrain(end);
+lambda2 = 1 + data.yInfStrain(end);
+lambda3 = 1 + data.zInfStrain(end);
+
+% compose the defomration gradient
+F = [lambda1 0 0; 0 lambda2 0; 0 0 lambda3];
+
+% extract Cauchy stress from data
+T_11 = data.xStress(end);
+T = [T_11 0 0; 0 0 0; 0 0 0];
+
+% calculate 1st P-K stress
+P = lambda1 .* lambda2 .* lambda3 .* T * transpose(inv(F));
+P_11 = P(1, 1);
+
+% calculate 2nd P-K stress
+% S = lambda1 .* lambda2 .* lambda3 .* inv(F) * T * transpose(inv(F));
+S = F \ P;
+S_11 = S(1, 1);
+
+% plot 
+figure();
 
