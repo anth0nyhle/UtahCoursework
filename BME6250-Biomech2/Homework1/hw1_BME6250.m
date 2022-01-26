@@ -1,11 +1,11 @@
 % Created by: Anthony H. Le
-% Last updated: 2022-01-25
+% Last updated: 2022-01-26
 
 % BME 6250 - Biomechanics II
 % Homework 1
 % Due date: 2022-01-27, 09:00 MST
 
-%% Problem 1b
+%% Problem 1
 close all;
 clear;
 
@@ -16,6 +16,9 @@ syms lambda1 lambda2 lambda3 alpha E
 F = [lambda1 0 alpha;
     0 lambda2 0;
     0 0 lambda3];
+
+% solve for the determinant of the deformation gradient
+det(F);
 
 % calculate the Green-Lagrange strain tensor
 E = (1/2) * (transpose(F) * F - 1); 
@@ -132,29 +135,51 @@ close all;
 clear;
 
 % import data exported from FEBio
+% variables: time, relative volumne (relVol), Cauchy stress (xStress),
+%            stretch ratios (xInfStrain, yInfStrain, zInfStrain)
 data = readtable('.\data\hw1prb5_data.xlsx'); % read as table data type
 
 % determine the stretch ratio from data
-lambda1 = 1 + data.xInfStrain(end);
-lambda2 = 1 + data.yInfStrain(end);
-lambda3 = 1 + data.zInfStrain(end);
+lambda1 = 1 + data.xInfStrain;
+lambda2 = 1 + data.yInfStrain;
+lambda3 = 1 + data.zInfStrain;
 
 % compose the defomration gradient
-F = [lambda1 0 0; 0 lambda2 0; 0 0 lambda3];
+% F = [lambda1 0 0; 0 lambda2 0; 0 0 lambda3];
 
 % extract Cauchy stress from data
-T_11 = data.xStress(end);
-T = [T_11 0 0; 0 0 0; 0 0 0];
+T_11 = data.xStress;
 
-% calculate 1st P-K stress
-P = lambda1 .* lambda2 .* lambda3 .* T * transpose(inv(F));
-P_11 = P(1, 1);
+% extract Jacobain (volume ratio or relative volume) from data
+J = data.relVol;
 
-% calculate 2nd P-K stress
-% S = lambda1 .* lambda2 .* lambda3 .* inv(F) * T * transpose(inv(F));
-S = F \ P;
-S_11 = S(1, 1);
+% initialize matrices
+P_11 = zeros(length(T_11), 1);
+S_11 = zeros(length(T_11), 1);
 
-% plot 
+for i = 1:length(T_11)
+    % compose the defomration gradient
+    F = [lambda1(i, 1) 0 0; 0 lambda2(i, 1) 0; 0 0 lambda3(i, 1)];
+
+    % Cauchy stress
+    T = [T_11(i, 1) 0 0; 0 0 0; 0 0 0];
+
+    % calculate 1st P-K stress
+    P = data.relVol(i, 1) .* (T * transpose(inv(F)));
+    P_11(i, 1) = P(1, 1);
+    
+    % calculate 2nd P-K stress
+    S = F \ P;
+    S_11(i, 1) = S(1, 1);
+end
+
+% plot time vs. Cauchy stress, 1st P-K stress, and 2nd P-K stress
 figure();
-
+hold on;
+plot(data.time, T_11, '-o', 'LineWidth', 1.2);
+plot(data.time, P_11, '-d', 'LineWidth', 1.2);
+plot(data.time, S_11, '-*', 'LineWidth', 1.2);
+xlabel('Time (s)');
+ylabel('Stress (psi)');
+legend('Cauchy Stress', '1st P-K Stress', '2nd P-K Stress', 'Location', 'northwest');
+hold off;
