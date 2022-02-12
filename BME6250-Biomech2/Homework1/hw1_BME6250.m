@@ -6,8 +6,7 @@
 % Due date: 2022-01-27, 09:00 MST
 
 %% Problem 1
-close all;
-clear;
+close all; clear;
 
 % initialize symbolic variables
 syms lambda1 lambda2 lambda3 alpha E 
@@ -24,8 +23,7 @@ det(F);
 E = (1/2) * (transpose(F) * F - 1); 
 
 %% Problem 2
-close all;
-clear;
+close all; clear;
 
 % define the deformation gradient
 F = [1.2287 0.8604 0;
@@ -46,8 +44,7 @@ theta = -asind(R(1, 2)); % solve for theta in -sin(theta) = 0.5736
 theta2 = asind(R(2, 1)); % solve for theta in sin(theta) = -0.5736, confirms clockwise rotation
 
 %% Problem 3
-close all;
-clear;
+close all; clear;
 
 % initialize symbolic variables
 syms gamma lambda E
@@ -70,8 +67,7 @@ U = [1 0 0;
 E = (1/2) * ((U * U) - 1);
 
 %% Problem 4a
-close all;
-clear;
+close all; clear;
 
 % define the four markers of the element, El_0
 P1_0 = [0 0 0];
@@ -131,8 +127,7 @@ A = 2 .* [dX(:, 1).^2 dX(:, 2).^2 2.*dX(:, 1).*dX(:, 2)];
 E = A \ b; % 3x1 vector
 
 %% Problem 5
-close all;
-clear;
+close all; clear;
 
 % import data exported from FEBio
 % variables: time, relative volumne (relVol), Cauchy stress (xStress),
