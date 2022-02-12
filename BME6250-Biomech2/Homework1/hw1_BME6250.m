@@ -17,11 +17,16 @@ F = [lambda1 0 alpha;
     0 lambda2 0;
     0 0 lambda3];
 
+% problem 1a
 % solve for the determinant of the deformation gradient
 det(F);
 
+% problem 1b
+% define the indentity matrix
+I = [1 0 0; 0 1 0; 0 0 1];
+
 % calculate the Green-Lagrange strain tensor
-E = (1/2) * (transpose(F) * F - 1); 
+E = (1/2) * (transpose(F) * F - I); 
 
 %% Problem 2
 close all;
@@ -62,12 +67,15 @@ U = [1 0 0;
     0 lambda 0;
     0 0 lambda];
 
+% define the indentity matrix
+I = [1 0 0; 0 1 0; 0 0 1];
+
 % Green-Lagrange strain tensor
 % E = (1/2) * ((transpose(U) * transpose(R) * R * U) - 1);
 
 % since R is orthogonal and U is symmetric
 % Green-Lagrange strain tensor does not depend on R
-E = (1/2) * ((U * U) - 1);
+E = (1/2) * ((U * U) - I);
 
 %% Problem 4a
 close all;
@@ -153,22 +161,24 @@ T_11 = data.xStress;
 % extract Jacobain (volume ratio or relative volume) from data
 J = data.relVol;
 
-% initialize matrices
+% initialize vectors for 1st P-K and 2nd P-K stresses
 P_11 = zeros(length(T_11), 1);
 S_11 = zeros(length(T_11), 1);
 
 for i = 1:length(T_11)
-    % compose the defomration gradient
+    % compose the deformation gradient
     F = [lambda1(i, 1) 0 0; 0 lambda2(i, 1) 0; 0 0 lambda3(i, 1)];
 
     % Cauchy stress
     T = [T_11(i, 1) 0 0; 0 0 0; 0 0 0];
 
-    % calculate 1st P-K stress
-    P = data.relVol(i, 1) .* (T * transpose(inv(F)));
+    % calculate 1st P-K stress as a function of applied axial stress ratio
+    % for lambda_1 = 1.0 to 2.0
+    P = J(i, 1) .* (T * transpose(inv(F)));
     P_11(i, 1) = P(1, 1);
     
-    % calculate 2nd P-K stress
+    % calculate 2nd P-K stress as a function of applied axial stress ratio
+    % for lambda_1 = 1.0 to 2.0
     S = F \ P;
     S_11(i, 1) = S(1, 1);
 end
