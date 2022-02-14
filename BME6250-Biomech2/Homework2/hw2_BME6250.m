@@ -6,7 +6,7 @@
 % Due date: 2022-02-15, 09:00 MST
 
 %% Problem 2a
-close all; clear;
+close all; clear; clc;
 
 syms m k I1 I2 I3 C C2 Id
 % m: mu
@@ -38,7 +38,7 @@ dI3 = I3 \ C;
 S = 2 * ((dW1 + I1 * dW2 + I2 * dW3) * Id - (dW2 + I1 * dW3) * C + dW3 * C^2);
 
 %% Problem 2b
-close all; clear;
+close all; clear; clc;
 
 syms m k I1 I2 I3 C C2 Id
 % m: mu
@@ -78,14 +78,21 @@ dI3 = I3 \ C;
 S = 2 * ((dW1 + I1 * dW2 + I2 * dW3) * Id - (dW2 + I1 * dW3) * C + dW3 * C^2);
 
 %% Problem 3a
-close all; clear;
+close all; clear; clc;
 
-syms m Jm I1 lambda
+syms m Jm I1 I2 I3 Id lambda
 
 W = -(m/2) * Jm * log(1 - ((I1 - 3) / Jm));
 
 dW1 = diff(W, I1);
+dW2 = diff(W, I2);
+dW3 = diff(W, I3);
 
 F = diag([lambda lambda 1/sqrt(lambda)]);
 
+B = F * transpose(F);
+Binv = inv(transpose(F)) * inv(F);
+
+T = (2/Jm) * (dW1 * B - I3 * dW2 * Binv + (I2 * dW2 + I3 * dW3) * Id);
+S = (Jm/2) * F \ T \ transpose(F);
 
