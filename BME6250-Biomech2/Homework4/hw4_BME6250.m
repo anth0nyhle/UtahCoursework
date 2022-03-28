@@ -28,7 +28,7 @@ hold off;
 %% Problem 2a
 clc; clear; close all;
 
-artery_data = readtable('.\hw4prb2a_CircumRadialStress_Data.csv');
+artery_data = readtable('.\data\hw4prb2a_CircumRadialStress_Data.csv');
 
 figure();
 hold on;
@@ -44,7 +44,7 @@ hold off;
 %% Problem 2b & 2c
 clc; clear; close all;
 
-artery_data = readtable('.\hw4prb2c_CircumRadialResStress_Data.csv');
+artery_data = readtable('.\data\hw4prb2c_CircumRadialResStress_Data.csv');
 
 figure();
 hold on;
