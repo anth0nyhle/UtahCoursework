@@ -8,7 +8,22 @@
 %% Problem 1
 clc; clear; close all;
 
+stress_data = readtable('.\hw4prb1_CauchyStress_Data.csv');
 
+figure();
+hold on;
+plot(stress_data.x + 1, stress_data.k_0, '-o', 'LineWidth', 2);
+plot(stress_data.x_1 + 1, stress_data.k_0_0667, '-o', 'LineWidth', 2);
+plot(stress_data.x_2 + 1, stress_data.k_0_1333, '-o', 'LineWidth', 2);
+plot(stress_data.x_3 + 1, stress_data.k_0_2, '-o', 'LineWidth', 2);
+plot(stress_data.x_4 + 1, stress_data.k_0_2667, '-o', 'LineWidth', 2);
+plot(stress_data.x_5 + 1, stress_data.k_0_3333, '-o', 'LineWidth', 2);
+xlabel('\lambda');
+ylabel('Cauchy Stress (MPa)');
+grid on;
+set(gcf,'position',[200, 200, 1000, 500])
+legend('\kappa = 0', '\kappa = 1/15', '\kappa = 2/15', '\kappa = 1/5', '\kappa = 4/15', '\kappa = 1/3', 'Location', 'northwest');
+hold off;
 
 %% Problem 2a
 clc; clear; close all;
@@ -72,7 +87,7 @@ ylabel('Force (X-Rigid Force, N)');
 grid on;
 set(gcf,'position',[200, 200, 1000, 500])
 title('Force-Length Curve');
-legend('0% Activation', '25% Activation', '50% Activation', '75% Activation', '100% Activation');
+legend('0% Activation', '25% Activation', '50% Activation', '75% Activation', '100% Activation', 'Location', 'southeast');
 hold off;
 
 %% Problem 3b
