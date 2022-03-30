@@ -28,12 +28,12 @@ hold off;
 %% Problem 2a
 clc; clear; close all;
 
-artery_data = readtable('.\data\hw4prb2a_CircumRadialStress_Data.csv');
+loaded_woPS = readtable('.\data\hw4prb2a_CircumRadialStress_Data.csv');
 
 figure();
 hold on;
-plot(artery_data.x_pos, artery_data.y_stress, '-o', 'LineWidth', 2)
-plot(artery_data.x_pos, artery_data.x_stress, '-o', 'LineWidth', 2)
+plot(loaded_woPS.x_pos, loaded_woPS.y_stress, '-o', 'LineWidth', 2)
+plot(loaded_woPS.x_pos, loaded_woPS.x_stress, '-o', 'LineWidth', 2)
 xlabel('Radial Position (X-Position, mm)');
 ylabel('Stress (kPa)');
 grid on;
@@ -41,39 +41,41 @@ set(gcf,'position',[200, 200, 1000, 500])
 legend('Circumferential Stress (Y-Stress)', 'Radial Stress (X-Stress)');
 hold off;
 
-%% Problem 2b & 2c
+%% Problem 2b
 clc; clear; close all;
 
-artery_data = readtable('.\data\hw4prb2c_CircumRadialResStress_Data.csv');
+loaded_wPS = readtable('.\data\hw4prb2c_CircumResStress_Data1.csv');
 
 figure();
 hold on;
-plot(artery_data.x_pos1, artery_data.y_stress1, '-o', 'LineWidth', 2)
-plot(artery_data.x_pos1, artery_data.x_stress1, '-o', 'LineWidth', 2)
+plot(loaded_wPS.x, loaded_wPS.y_stress, '-o', 'LineWidth', 2)
 xlabel('Radial Position (X-Position, mm)');
-ylabel('Stress (kPa)');
+ylabel('Circumferential Stress (Y-Stress, kPa)');
 grid on;
 set(gcf,'position',[200, 200, 1000, 500])
-title('Unloaded Configuration (after applying pre-strain)');
-legend('Circumferential Stress (Y-Stress)', 'Radial Stress (X-Stress)', 'Location', 'northwest');
 hold off;
 
+%% Problem 2c
+clc; clear; close all;
+
+loaded_woPS = readtable('.\data\hw4prb2a_CircumRadialStress_Data.csv');
+loaded_wPS = readtable('.\data\hw4prb2c_CircumResStress_Data2.csv');
+
 figure();
 hold on;
-plot(artery_data.x_pos2, artery_data.y_stress2, '-o', 'LineWidth', 2)
-plot(artery_data.x_pos2, artery_data.x_stress2, '-o', 'LineWidth', 2)
+plot(loaded_woPS.x_pos, loaded_woPS.y_stress, '-o', 'LineWidth', 2)
+plot(loaded_wPS.x, loaded_wPS.y_stress, '-o', 'LineWidth', 2)
 xlabel('Radial Position (X-Position, mm)');
-ylabel('Stress (kPa)');
+ylabel('Circumferential Stress (Y-Stress, kPa)');
 grid on;
 set(gcf,'position',[200, 200, 1000, 500])
-title('Loaded Configuration (after applying luminal pressure)');
-legend('Circumferential Stress (Y-Stress)', 'Radial Stress (X-Stress)');
+legend('Loaded without Pre-Strain', 'Loaded with Pre-Strain');
 hold off;
 
 %% Problem 3a
 clc; clear; close all;
 
-fl_data = readtable('.\Hill_Tutorial\hw4prb3a_HillModelFL_Data.csv');
+fl_data = readtable('.\Hill_Tutorial\data\hw4prb3a_HillModelFL_Data.csv');
 
 figure();
 hold on;
@@ -93,7 +95,7 @@ hold off;
 %% Problem 3b
 clc; clear; close all;
 
-fv_data = readtable('.\Hill_Tutorial\hw4prb3b_HillModelFV_Data.csv');
+fv_data = readtable('.\Hill_Tutorial\data\hw4prb3b_HillModelFV_Data.csv');
 
 f = [50, 40, 30, 20, 10, 5, 2]';
 v = table2array(fv_data(end, 2:end))';
@@ -111,7 +113,7 @@ hold off;
 %% Problem 4
 clc; clear; close all;
 
-apex_data = readtable('.\Cardiac Mechanics Benchmark Problems\hw4prb4_Apex_Z-PosData.csv');
+apex_data = readtable('.\Cardiac Mechanics Benchmark Problems\data\hw4prb4_Apex_Z-PosData.csv');
 
 figure();
 hold on;
