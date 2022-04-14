@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<febio_optimize version="2.0">
+	<Options type="constrained levmar">
+		<obj_tol>0.0001</obj_tol>
+		<f_diff_scale>0.001</f_diff_scale>
+	</Options>
+	<Parameters>
+		<param name="fem.material[0].E">0.5, .01, 2</param>
+		<param name="fem.material[0].v">0, -0.1, 0.495</param>
+	</Parameters>
+	<Objective type="data-fit">
+		<fnc type="parameter">
+			<param name="fem.rigidbody('rigid').Fz"/>
+		</fnc>
+		<data>
+			<point>0,	0</point>
+			<point>0.05,	-0.0100774</point>
+			<point>0.0890191,	-0.0180532</point>
+			<point>0.135236,	-0.0276296</point>
+			<point>0.187801,	-0.0386981</point>
+			<point>0.245965,	-0.0511729</point>
+			<point>0.309067,	-0.0649886</point>
+			<point>0.376525,	-0.0800974</point>
+			<point>0.447823,	-0.0964673</point>
+			<point>0.522509,	-0.114081</point>
+			<point>0.600183,	-0.132935</point>
+			<point>0.679065,	-0.152675</point>
+			<point>0.759089,	-0.173351</point>
+			<point>0.840194,	-0.195018</point>
+			<point>0.922321,	-0.21774</point>
+			<point>1,	-0.240003</point>
+		</data>
+	</Objective>
+</febio_optimize>
